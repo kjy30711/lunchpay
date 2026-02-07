@@ -2,14 +2,68 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+
+<!-- ✅ 모바일 화면 꽉 차게 하는 핵심 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
 <title>월말 점심값 계산기</title>
+
 <style>
-  body { font-family: Arial; max-width: 600px; margin: 40px auto; }
+  /* 💻 PC 기본 디자인 유지 */
+  body { 
+    font-family: Arial; 
+    max-width: 600px; 
+    margin: 40px auto; 
+  }
+
   h1 { text-align: center; }
-  input, button { padding: 6px; margin: 4px; }
-  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-  th, td { border: 1px solid #ddd; padding: 2px; text-align: center; }
+
+  input, button { 
+    padding: 6px; 
+    margin: 4px; 
+    font-size: 14px;
+  }
+
+  table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 20px; 
+  }
+
+  th, td { 
+    border: 1px solid #ddd; 
+    padding: 2px; 
+    text-align: center; 
+  }
+
   th { background: #f2f2f2; }
+
+  /* 📱 모바일 전용 UI (화면 768px 이하) */
+  @media (max-width: 768px) {
+    body {
+      max-width: 100%;
+      margin: 0;
+      padding: 12px;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+
+    input, button {
+      padding: 12px;
+      font-size: 16px;
+    }
+
+    table {
+      font-size: 15px;
+    }
+
+    th, td {
+      padding: 6px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -19,7 +73,7 @@
 <h1>🍱 월말 점심값 계산기</h1>
 
 기본 점심값:
-<input type="number" id="price" onfocus="this.select()" onkeydown="handlePriceEnter(event)" /> 원
+<input type="number" id="price" onfocus="this.select()" onkeydown="handlePriceEnter(event)" inputmode="numeric" pattern="[0-9]*" /> 원
 <button onclick="savePrice()" tabindex="-1">저장</button>
 
 <hr>
@@ -53,7 +107,6 @@ function handleEnter(e) {
   if (e.key === "Enter") addPerson();
 }
 
-/* ✅ 기본 점심값 입력 후 Enter → 저장 + 이름칸 이동 */
 function handlePriceEnter(e) {
   if (e.key !== "Enter") return;
   e.preventDefault();
@@ -129,10 +182,7 @@ document.getElementById("list").addEventListener("input", function(e) {
   if (e.target.tagName !== "INPUT") return;
   const idx = Number(e.target.dataset.index);
 
-  let raw = e.target.value;
-  raw = raw.replace(/[^0-9]/g, '');
-  raw = raw.replace(/^0+(?=\d)/, '');
-
+  let raw = e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '');
   const val = raw === "" ? 0 : Number(raw);
   e.target.value = val;
 
@@ -154,17 +204,14 @@ document.getElementById("list").addEventListener("keydown", function(e) {
   const inputs = Array.from(document.querySelectorAll('#list input[type="number"]'));
   const current = document.activeElement;
   const idx = inputs.indexOf(current);
-
   if (idx === -1) return;
 
   e.preventDefault();
 
   if (e.shiftKey && e.key === "Tab") {
-    const prev = idx === 0 ? inputs.length - 1 : idx - 1;
-    inputs[prev].focus();
+    inputs[idx === 0 ? inputs.length - 1 : idx - 1].focus();
   } else {
-    const next = idx === inputs.length - 1 ? 0 : idx + 1;
-    inputs[next].focus();
+    inputs[idx === inputs.length - 1 ? 0 : idx + 1].focus();
   }
 });
 
