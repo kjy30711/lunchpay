@@ -97,16 +97,16 @@
 
 <h1>🍱 월말 점심값 계산기</h1>
 
-기본 점심값:
+점심값:
 <input type="number" id="price" onfocus="this.select()" onkeydown="handlePriceEnter(event)" inputmode="numeric" pattern="[0-9]*" /> 원
 <button onclick="savePrice()" tabindex="-1">저장</button>
 
 <hr>
 
-이름 추가:
-<input type="text" id="nameInput" placeholder="이름" onkeydown="handleEnter(event)">
+이름:
+<input type="text" id="nameInput" placeholder="" onkeydown="handleEnter(event)">
 <button onclick="addPerson()" tabindex="-1">추가</button>
-<button onclick="resetAll()" tabindex="-1">전체 초기화</button>
+<button onclick="resetAll()" tabindex="-1">초기화</button>
 <button onclick="copyResult()" tabindex="-1">복사</button>
 
 <table>
