@@ -19,7 +19,7 @@
 <h1>🍱 월말 점심값 계산기</h1>
 
 기본 점심값:
-<input type="number" id="price" onfocus="this.select()" /> 원
+<input type="number" id="price" onfocus="this.select()" onkeydown="handlePriceEnter(event)" /> 원
 <button onclick="savePrice()" tabindex="-1">저장</button>
 
 <hr>
@@ -51,6 +51,14 @@ document.getElementById("price").value = price;
 
 function handleEnter(e) {
   if (e.key === "Enter") addPerson();
+}
+
+/* ✅ 기본 점심값 입력 후 Enter → 저장 + 이름칸 이동 */
+function handlePriceEnter(e) {
+  if (e.key !== "Enter") return;
+  e.preventDefault();
+  savePrice();
+  document.getElementById("nameInput").focus();
 }
 
 function savePrice() {
@@ -117,7 +125,6 @@ function render() {
   });
 }
 
-/* 값 변경 시 합계만 업데이트 + 입력값 정제 */
 document.getElementById("list").addEventListener("input", function(e) {
   if (e.target.tagName !== "INPUT") return;
   const idx = Number(e.target.dataset.index);
@@ -134,7 +141,6 @@ document.getElementById("list").addEventListener("input", function(e) {
   updateTotalsOnly();
 });
 
-/* 합계 부분만 갱신 (콤마 적용) */
 function updateTotalsOnly() {
   document.querySelectorAll("#list tr").forEach((tr, i) => {
     const totalCell = tr.querySelector(".total");
@@ -142,7 +148,6 @@ function updateTotalsOnly() {
   });
 }
 
-/* 🔥 Tab + Enter → 다음 입력칸 이동 */
 document.getElementById("list").addEventListener("keydown", function(e) {
   if (e.key !== "Tab" && e.key !== "Enter") return;
 
@@ -163,7 +168,6 @@ document.getElementById("list").addEventListener("keydown", function(e) {
   }
 });
 
-/* ✅ 복사 버튼 기능 + 월 이름 자동 추가 */
 function copyResult() {
   if (people.length === 0) {
     alert("복사할 데이터가 없습니다.");
