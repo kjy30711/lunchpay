@@ -37,7 +37,7 @@
 
   th { background: #f2f2f2; }
 
-  /* 📱 모바일 전용 */
+  /* 📱 모바일 전용 자동 조절 */
   @media (max-width: 768px) {
     body {
       max-width: 100%;
@@ -53,11 +53,22 @@
     input, button {
       padding: 10px;
       font-size: 16px;
-      margin: 2px;
+      margin: 4px 0;
+      width: 100%;
+    }
+
+    /* ✅ 기본 점심값 입력폼 + 버튼 세로 배치 */
+    #price {
+      width: 100%;
+    }
+
+    /* 버튼들도 줄바꿈 */
+    #app > button {
+      width: 100%;
     }
 
     table {
-      table-layout: fixed;     /* ✅ 컬럼 폭 고정 */
+      table-layout: fixed;
       font-size: 14px;
     }
 
@@ -68,13 +79,11 @@
       white-space: nowrap;
     }
 
-    /* 컬럼 폭 비율 조정 */
-    th:nth-child(1), td:nth-child(1) { width: 22%; } /* 이름 */
-    th:nth-child(2), td:nth-child(2) { width: 26%; } /* 횟수 */
-    th:nth-child(3), td:nth-child(3) { width: 32%; } /* 금액 */
-    th:nth-child(4), td:nth-child(4) { width: 20%; } /* 삭제 */
+    th:nth-child(1), td:nth-child(1) { width: 22%; }
+    th:nth-child(2), td:nth-child(2) { width: 26%; }
+    th:nth-child(3), td:nth-child(3) { width: 32%; }
+    th:nth-child(4), td:nth-child(4) { width: 20%; }
 
-    /* ✅ 입력폼 자동 폭 */
     td input[type="number"] {
       width: 100%;
       min-width: 0;
@@ -88,14 +97,14 @@
 
 <h1>🍱 월말 점심값 계산기</h1>
 
-기본 점심값:
+점심값:
 <input type="number" id="price" onfocus="this.select()" onkeydown="handlePriceEnter(event)" inputmode="numeric" pattern="[0-9]*" /> 원
 <button onclick="savePrice()" tabindex="-1">저장</button>
 
 <hr>
 
-이름 추가:
-<input type="text" id="nameInput" placeholder="이름" onkeydown="handleEnter(event)">
+이름:
+<input type="text" id="nameInput" placeholder="" onkeydown="handleEnter(event)">
 <button onclick="addPerson()" tabindex="-1">추가</button>
 <button onclick="resetAll()" tabindex="-1">전체 초기화</button>
 <button onclick="copyResult()" tabindex="-1">복사</button>
