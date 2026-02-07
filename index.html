@@ -4,12 +4,52 @@
 <meta charset="UTF-8">
 <title>월말 점심값 계산기</title>
 <style>
-  body { font-family: Arial; max-width: 600px; margin: 40px auto; }
-  h1 { text-align: center; }
-  input, button { padding: 6px; margin: 4px; }
-  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-  th, td { border: 1px solid #ddd; padding: 2px; text-align: center; }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  h1 { text-align: center; font-size: 1.5em; }
+  
+  input, button {
+    padding: 12px;
+    margin: 4px 0;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  button { cursor: pointer; }
+
+  .flex-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .flex-row > * {
+    flex: 1;
+    min-width: 80px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.9em;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
   th { background: #f2f2f2; }
+
+  /* 모바일 가로 스크롤 */
+  .table-container {
+    overflow-x: auto;
+  }
 </style>
 </head>
 <body>
@@ -18,52 +58,42 @@
 
 <h1>🍱 월말 점심값 계산기</h1>
 
-기본 점심값:
-<input 
-  type="number" 
-  id="price" 
-  onfocus="this.select()"
-  onkeydown="handlePriceEnter(event)"
-/> 원
-<button onclick="savePrice()" tabindex="-1">저장</button>
+<div class="flex-row">
+  <input type="number" id="price" onfocus="this.select()" placeholder="기본 점심값" />
+  <button onclick="savePrice()" tabindex="-1">저장</button>
+</div>
 
-<hr>
+<div class="flex-row">
+  <input type="text" id="nameInput" placeholder="이름" onkeydown="handleEnter(event)">
+  <button onclick="addPerson()" tabindex="-1">추가</button>
+  <button onclick="resetAll()" tabindex="-1">전체 초기화</button>
+  <button onclick="copyResult()" tabindex="-1">복사</button>
+</div>
 
-이름 추가:
-<input type="text" id="nameInput" placeholder="이름" onkeydown="handleEnter(event)">
-<button onclick="addPerson()" tabindex="-1">추가</button>
-<button onclick="resetAll()" tabindex="-1">전체 초기화</button>
-<button onclick="copyResult()" tabindex="-1">복사</button>
-
-<table>
-  <thead>
-    <tr>
-      <th>이름</th>
-      <th>먹은 횟수</th>
-      <th>월 점심값</th>
-      <th>삭제</th>
-    </tr>
-  </thead>
-  <tbody id="list"></tbody>
-</table>
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>이름</th>
+        <th>먹은 횟수</th>
+        <th>월 점심값</th>
+        <th>삭제</th>
+      </tr>
+    </thead>
+    <tbody id="list"></tbody>
+  </table>
+</div>
 
 </div>
 
 <script>
+// JS는 기존 코드 그대로 사용
 let people = JSON.parse(localStorage.getItem("people")) || [];
 let price = Number(localStorage.getItem("price")) || 6000;
 document.getElementById("price").value = price;
 
 function handleEnter(e) {
   if (e.key === "Enter") addPerson();
-}
-
-/* ✅ 기본 점심값 입력 후 Enter → 이름 입력칸으로 이동 */
-function handlePriceEnter(e) {
-  if (e.key === "Enter") {
-    savePrice();
-    document.getElementById("nameInput").focus();
-  }
 }
 
 function savePrice() {
@@ -130,7 +160,6 @@ function render() {
   });
 }
 
-/* 값 변경 시 합계만 업데이트 + 입력값 정제 */
 document.getElementById("list").addEventListener("input", function(e) {
   if (e.target.tagName !== "INPUT") return;
   const idx = Number(e.target.dataset.index);
@@ -147,7 +176,6 @@ document.getElementById("list").addEventListener("input", function(e) {
   updateTotalsOnly();
 });
 
-/* 합계 부분만 갱신 (콤마 적용) */
 function updateTotalsOnly() {
   document.querySelectorAll("#list tr").forEach((tr, i) => {
     const totalCell = tr.querySelector(".total");
@@ -155,7 +183,6 @@ function updateTotalsOnly() {
   });
 }
 
-/* 🔥 Tab + Enter → 다음 입력칸 이동 */
 document.getElementById("list").addEventListener("keydown", function(e) {
   if (e.key !== "Tab" && e.key !== "Enter") return;
 
@@ -176,7 +203,6 @@ document.getElementById("list").addEventListener("keydown", function(e) {
   }
 });
 
-/* 복사 버튼 + 월 제목 */
 function copyResult() {
   if (people.length === 0) {
     alert("복사할 데이터가 없습니다.");
