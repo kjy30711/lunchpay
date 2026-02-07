@@ -37,7 +37,29 @@
 
   th { background: #f2f2f2; }
 
-  /* 📱 모바일 전용 자동 조절 */
+  /* ✅ 상단 입력 라인: 한 줄 유지용 flex */
+  .line {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: nowrap;   /* 줄바꿈 금지 */
+  }
+
+  .line label {
+    white-space: nowrap;
+  }
+
+  .line input {
+    flex: 1 1 auto;      /* ✅ 입력폼만 자동 축소 */
+    min-width: 0;       /* 모바일에서 flex 깨짐 방지 */
+  }
+
+  .line button {
+    flex: 0 0 auto;     /* 버튼 크기 고정 */
+    white-space: nowrap;
+  }
+
+  /* 📱 모바일에서만 입력폼 더 잘 줄어들게 */
   @media (max-width: 768px) {
     body {
       max-width: 100%;
@@ -45,48 +67,8 @@
       padding: 12px;
     }
 
-    h1 {
-      font-size: 20px;
-      margin: 10px 0;
-    }
-
     input, button {
-      padding: 10px;
       font-size: 16px;
-      margin: 4px 0;
-      width: 100%;
-    }
-
-    /* ✅ 기본 점심값 입력폼 + 버튼 세로 배치 */
-    #price {
-      width: 100%;
-    }
-
-    /* 버튼들도 줄바꿈 */
-    #app > button {
-      width: 100%;
-    }
-
-    table {
-      table-layout: fixed;
-      font-size: 14px;
-    }
-
-    th, td {
-      padding: 6px 4px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    th:nth-child(1), td:nth-child(1) { width: 22%; }
-    th:nth-child(2), td:nth-child(2) { width: 26%; }
-    th:nth-child(3), td:nth-child(3) { width: 32%; }
-    th:nth-child(4), td:nth-child(4) { width: 20%; }
-
-    td input[type="number"] {
-      width: 100%;
-      min-width: 0;
     }
   }
 </style>
@@ -97,17 +79,22 @@
 
 <h1>🍱 월말 점심값 계산기</h1>
 
-점심값:
-<input type="number" id="price" onfocus="this.select()" onkeydown="handlePriceEnter(event)" inputmode="numeric" pattern="[0-9]*" /> 원
-<button onclick="savePrice()" tabindex="-1">저장</button>
+<div class="line">
+  <label for="price">점심값:</label>
+  <input type="number" id="price" onfocus="this.select()" onkeydown="handlePriceEnter(event)" inputmode="numeric" pattern="[0-9]*">
+  <span>원</span>
+  <button onclick="savePrice()" tabindex="-1">저장</button>
+</div>
 
 <hr>
 
-이름:
-<input type="text" id="nameInput" placeholder="" onkeydown="handleEnter(event)">
-<button onclick="addPerson()" tabindex="-1">추가</button>
-<button onclick="resetAll()" tabindex="-1">전체 초기화</button>
-<button onclick="copyResult()" tabindex="-1">복사</button>
+<div class="line">
+  <label for="nameInput">이름:</label>
+  <input type="text" id="nameInput" placeholder="" onkeydown="handleEnter(event)">
+  <button onclick="addPerson()" tabindex="-1">추가</button>
+  <button onclick="resetAll()" tabindex="-1">전체 초기화</button>
+  <button onclick="copyResult()" tabindex="-1">복사</button>
+</div>
 
 <table>
   <thead>
