@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>월말 점심값 계산기</title>
+<style>
+  body { font-family: Arial; max-width: 600px; margin: 40px auto; }
+  h1 { text-align: center; }
+  input, button { padding: 6px; margin: 4px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  th, td { border: 1px solid #ddd; padding: 2px; text-align: center; }
+  th { background: #f2f2f2; }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+<h1>🍱 월말 점심값 계산기</h1>
+
+기본 점심값:
+<input 
+  type="number" 
+  id="price" 
+  onfocus="this.select()"
+  onkeydown="handlePriceEnter(event)"
+/> 원
+<button onclick="savePrice()" tabindex="-1">저장</button>
+
+<hr>
+
+이름 추가:
+<input type="text" id="nameInput" placeholder="이름" onkeydown="handleEnter(event)">
+<button onclick="addPerson()" tabindex="-1">추가</button>
+<button onclick="resetAll()" tabindex="-1">전체 초기화</button>
+<button onclick="copyResult()" tabindex="-1">복사</button>
+
+<table>
+  <thead>
+    <tr>
+      <th>이름</th>
+      <th>먹은 횟수</th>
+      <th>월 점심값</th>
+      <th>삭제</th>
+    </tr>
+  </thead>
+  <tbody id="list"></tbody>
+</table>
+
+</div>
+
+<script>
+let people = JSON.parse(localStorage.getItem("people")) || [];
+let price = Number(localStorage.getItem("price")) || 6000;
+document.getElementById("price").value = price;
+
+function handleEnter(e) {
+  if (e.key === "Enter") addPerson();
+}
+
+/* ✅ 기본 점심값 입력 후 Enter → 이름 입력칸으로 이동 */
+function handlePriceEnter(e) {
+  if (e.key === "Enter") {
+    savePrice();
+    document.getElementById("nameInput").focus();
+  }
+}
+
+function savePrice() {
+  price = Number(document.getElementById("price").value) || 0;
+  localStorage.setItem("price", price);
+  updateTotalsOnly();
+}
+
+function addPerson() {
+  const name = document.getElementById("nameInput").value.trim();
+  if (!name) return alert("이름 입력하세요");
+  people.push({ name, count: 0 });
+  document.getElementById("nameInput").value = "";
+  saveAll();
+}
+
+function removePerson(index) {
+  people.splice(index, 1);
+  saveAll();
+}
+
+function resetAll() {
+  if (!confirm("모든 목록과 횟수를 초기화할까요?")) return;
+  people = [];
+  localStorage.removeItem("people");
+  render();
+}
+
+function saveAll() {
+  localStorage.setItem("people", JSON.stringify(people));
+  render();
+}
+
+function formatWon(num) {
+  return num.toLocaleString("ko-KR") + "원";
+}
+
+function render() {
+  const tbody = document.getElementById("list");
+  tbody.innerHTML = "";
+  people.forEach((p, i) => {
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <td>${p.name}</td>
+      <td>
+        <input 
+          type="number"
+          min="0"
+          step="1"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          value="${p.count}" 
+          data-index="${i}"
+          onfocus="this.select()"
+        >
+      </td>
+      <td class="total">${formatWon(p.count * price)}</td>
+      <td><button tabindex="-1">삭제</button></td>
+    `;
+
+    tr.querySelector("button").onclick = () => removePerson(i);
+    tbody.appendChild(tr);
+  });
+}
+
+/* 값 변경 시 합계만 업데이트 + 입력값 정제 */
+document.getElementById("list").addEventListener("input", function(e) {
+  if (e.target.tagName !== "INPUT") return;
+  const idx = Number(e.target.dataset.index);
+
+  let raw = e.target.value;
+  raw = raw.replace(/[^0-9]/g, '');
+  raw = raw.replace(/^0+(?=\d)/, '');
+
+  const val = raw === "" ? 0 : Number(raw);
+  e.target.value = val;
+
+  people[idx].count = val;
+  localStorage.setItem("people", JSON.stringify(people));
+  updateTotalsOnly();
+});
+
+/* 합계 부분만 갱신 (콤마 적용) */
+function updateTotalsOnly() {
+  document.querySelectorAll("#list tr").forEach((tr, i) => {
+    const totalCell = tr.querySelector(".total");
+    totalCell.textContent = formatWon(people[i].count * price);
+  });
+}
+
+/* 🔥 Tab + Enter → 다음 입력칸 이동 */
+document.getElementById("list").addEventListener("keydown", function(e) {
+  if (e.key !== "Tab" && e.key !== "Enter") return;
+
+  const inputs = Array.from(document.querySelectorAll('#list input[type="number"]'));
+  const current = document.activeElement;
+  const idx = inputs.indexOf(current);
+
+  if (idx === -1) return;
+
+  e.preventDefault();
+
+  if (e.shiftKey && e.key === "Tab") {
+    const prev = idx === 0 ? inputs.length - 1 : idx - 1;
+    inputs[prev].focus();
+  } else {
+    const next = idx === inputs.length - 1 ? 0 : idx + 1;
+    inputs[next].focus();
+  }
+});
+
+/* 복사 버튼 + 월 제목 */
+function copyResult() {
+  if (people.length === 0) {
+    alert("복사할 데이터가 없습니다.");
+    return;
+  }
+
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const title = `${year}년 ${month}월 정산`;
+
+  const lines = people.map(p => {
+    const total = p.count * price;
+    return `${p.name} ${price} * ${p.count} = ${total.toLocaleString("ko-KR")}원`;
+  });
+
+  const resultText = [title, ...lines].join("\n");
+
+  navigator.clipboard.writeText(resultText).then(() => {
+    alert("월 정산 내역이 복사되었습니다!");
+  }).catch(() => {
+    alert("복사에 실패했습니다. 브라우저 권한을 확인하세요.");
+  });
+}
+
+render();
+</script>
+
+</body>
+</html>
