@@ -2,10 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-
-<!-- ✅ 모바일 화면 꽉 차게 하는 핵심 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
 <title>월말 점심값 계산기</title>
 
 <style>
@@ -22,6 +19,7 @@
     padding: 6px; 
     margin: 4px; 
     font-size: 14px;
+    box-sizing: border-box;
   }
 
   table { 
@@ -34,11 +32,12 @@
     border: 1px solid #ddd; 
     padding: 2px; 
     text-align: center; 
+    word-break: keep-all;
   }
 
   th { background: #f2f2f2; }
 
-  /* 📱 모바일 전용 UI (화면 768px 이하) */
+  /* 📱 모바일 전용 */
   @media (max-width: 768px) {
     body {
       max-width: 100%;
@@ -52,16 +51,33 @@
     }
 
     input, button {
-      padding: 12px;
+      padding: 10px;
       font-size: 16px;
+      margin: 2px;
     }
 
     table {
-      font-size: 15px;
+      table-layout: fixed;     /* ✅ 컬럼 폭 고정 */
+      font-size: 14px;
     }
 
     th, td {
-      padding: 6px;
+      padding: 6px 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* 컬럼 폭 비율 조정 */
+    th:nth-child(1), td:nth-child(1) { width: 22%; } /* 이름 */
+    th:nth-child(2), td:nth-child(2) { width: 26%; } /* 횟수 */
+    th:nth-child(3), td:nth-child(3) { width: 32%; } /* 금액 */
+    th:nth-child(4), td:nth-child(4) { width: 20%; } /* 삭제 */
+
+    /* ✅ 입력폼 자동 폭 */
+    td input[type="number"] {
+      width: 100%;
+      min-width: 0;
     }
   }
 </style>
