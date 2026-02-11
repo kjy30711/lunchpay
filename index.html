@@ -33,7 +33,6 @@
     backdrop-filter: blur(10px);
   }
 
-  /* 타이틀 영역 */
   .title-area {
     text-align: center;
     margin-bottom: 24px;
@@ -80,64 +79,11 @@
     padding: 0;
     transition: all 0.2s;
     flex-shrink: 0;
-    vertical-align: middle;
   }
 
   .title-display .btn-edit-title:hover {
     background: #e2e8f0;
     color: #4a5568;
-  }
-
-  .title-edit-form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .title-edit-form input {
-    padding: 8px 14px;
-    font-size: 18px;
-    font-weight: 700;
-    border: 2px solid #667eea;
-    border-radius: 10px;
-    outline: none;
-    text-align: center;
-    width: 180px;
-    font-family: inherit;
-    background: #f7fafc;
-    transition: box-shadow 0.2s;
-  }
-
-  .title-edit-form input:focus {
-    box-shadow: 0 0 0 3px rgba(102,126,234,0.15);
-  }
-
-  .title-edit-form button {
-    padding: 8px 14px;
-    font-size: 13px;
-    font-weight: 700;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all 0.2s;
-  }
-
-  .title-edit-form .btn-save-title {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-  }
-
-  .title-edit-form .btn-cancel-title {
-    background: #edf2f7;
-    color: #4a5568;
-  }
-
-  .title-edit-form .btn-clear-title {
-    background: #fed7d7;
-    color: #c53030;
   }
 
   .section-label {
@@ -159,8 +105,8 @@
   input[type="number"],
   input[type="text"] {
     flex: 1;
-    padding: 12px 14px;
-    font-size: 17px;
+    padding: 0 14px;
+    font-size: 16px;
     font-weight: 500;
     border: 2px solid #e2e8f0;
     border-radius: 12px;
@@ -170,6 +116,7 @@
     min-width: 0;
     font-family: inherit;
     letter-spacing: -0.2px;
+    height: 44px;
   }
 
   input:focus {
@@ -178,14 +125,8 @@
     background: #fff;
   }
 
-  input:disabled, select:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-    background: #edf2f7;
-  }
-
   button {
-    padding: 12px 18px;
+    padding: 0 18px;
     font-size: 15px;
     font-weight: 700;
     border: none;
@@ -199,6 +140,7 @@
     gap: 6px;
     font-family: inherit;
     letter-spacing: -0.2px;
+    height: 44px;
   }
 
   button:active { transform: scale(0.96); }
@@ -209,6 +151,20 @@
     box-shadow: 0 4px 15px rgba(102,126,234,0.4);
   }
   .btn-primary:hover { box-shadow: 0 6px 20px rgba(102,126,234,0.6); }
+
+  .btn-cancel-inline {
+    background: #edf2f7 !important;
+    color: #4a5568 !important;
+    box-shadow: none !important;
+  }
+  .btn-cancel-inline:hover { background: #e2e8f0 !important; }
+
+  .btn-danger {
+    background: #fed7d7;
+    color: #c53030;
+    box-shadow: none;
+  }
+  .btn-danger:hover { background: #feb2b2; }
 
   .btn-add {
     background: linear-gradient(135deg, #48bb78, #38a169);
@@ -236,104 +192,168 @@
     margin: 20px 0;
   }
 
-  /* 계좌 */
-  .account-section { margin-bottom: 8px; }
-
-  .account-inline {
-    display: flex;
-    gap: 6px;
-    align-items: stretch;
-  }
-
-  .account-inline select {
-    padding: 10px 12px;
-    font-size: 15px;
-    font-weight: 600;
-    border: 2px solid #e2e8f0;
-    border-radius: 12px;
-    outline: none;
-    background-color: #f7fafc;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 12px;
-    font-family: inherit;
-    color: #333;
-    cursor: pointer;
-    min-width: 90px;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    -webkit-appearance: none;
-    appearance: none;
-    padding-right: 26px;
-  }
-
-  .account-inline select:focus {
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102,126,234,0.15);
-  }
-
-  .account-inline input { flex: 1; min-width: 0; }
-
-  .account-inline .btn-edit-account {
-    padding: 10px 14px;
-    font-size: 14px;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-    font-weight: 700;
-    white-space: nowrap;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-family: inherit;
-  }
-
-  .account-display {
+  .saved-display {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 12px 16px;
+    padding: 0 16px;
     background: #f7fafc;
     border: 2px solid #e2e8f0;
     border-radius: 12px;
     font-size: 16px;
     font-weight: 600;
     color: #2d3748;
-  }
-
-  .account-display .account-text {
-    flex: 1;
-    letter-spacing: -0.2px;
-  }
-
-  .account-display .btn-edit-inline {
-    padding: 6px 14px;
-    font-size: 13px;
-    font-weight: 700;
-    border-radius: 8px;
-    border: none;
-    background: #edf2f7;
-    color: #4a5568;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: inherit;
+    margin-bottom: 8px;
+    height: 44px;
+    overflow: hidden;
     white-space: nowrap;
   }
 
-  .account-display .btn-edit-inline:hover { background: #e2e8f0; }
-
-  .btn-save-account {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
+  .saved-display .saved-text {
+    flex: 1;
+    letter-spacing: -0.2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  .btn-cancel-account {
+  .btn-edit-pencil {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
     background: #edf2f7;
+    color: #718096;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .btn-edit-pencil:hover {
+    background: #e2e8f0;
     color: #4a5568;
   }
 
-  /* Summary */
+  /* 은행 클릭형 드롭다운 */
+  .bank-select {
+    position: relative;
+    flex: 0 0 auto;
+    width: 120px;
+  }
+
+  .bank-select-trigger {
+    width: 100%;
+    height: 44px;
+    padding: 0 32px 0 12px;
+    font-size: 15px;
+    font-weight: 600;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    background: #f7fafc;
+    color: #2d3748;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s;
+    font-family: inherit;
+    letter-spacing: -0.2px;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .bank-select-trigger::after {
+    content: "▾";
+    position: absolute;
+    right: 10px;
+    font-size: 13px;
+    color: #a0aec0;
+    pointer-events: none;
+    transition: transform 0.2s;
+  }
+
+  .bank-select.open .bank-select-trigger::after {
+    transform: rotate(180deg);
+  }
+
+  .bank-select-trigger:hover {
+    border-color: #cbd5e0;
+    background: #edf2f7;
+  }
+
+  .bank-select.open .bank-select-trigger {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.15);
+    background: #fff;
+  }
+
+  .bank-select-trigger.placeholder {
+    color: #a0aec0;
+    font-weight: 500;
+  }
+
+  .bank-select-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 200px;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    max-height: 240px;
+    overflow-y: auto;
+    z-index: 100;
+    display: none;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+    padding: 6px;
+  }
+
+  .bank-select.open .bank-select-dropdown {
+    display: block;
+    animation: dropIn 0.15s ease;
+  }
+
+  @keyframes dropIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .bank-select-item {
+    padding: 9px 12px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.1s;
+    font-family: inherit;
+    color: #2d3748;
+    letter-spacing: -0.2px;
+  }
+
+  .bank-select-item:hover {
+    background: #edf2f7;
+  }
+
+  .bank-select-item.selected {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    font-weight: 700;
+  }
+
+  .bank-select-item.selected:hover {
+    opacity: 0.9;
+  }
+
+  #accountNumber { flex: 1; min-width: 0; }
+  #accountHolder { flex: 0 0 auto; width: 80px; }
+
   .summary-banner {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 14px;
@@ -364,7 +384,6 @@
     letter-spacing: -0.5px;
   }
 
-  /* Table */
   table {
     width: 100%;
     border-collapse: separate;
@@ -409,7 +428,6 @@
 
   td:first-child { font-weight: 700; color: #2d3748; }
 
-  /* Counter */
   .counter-control {
     display: flex;
     align-items: center;
@@ -442,13 +460,14 @@
   .counter-control input[type="number"] {
     width: 52px;
     text-align: center;
-    padding: 6px 4px;
+    padding: 0 4px;
     font-size: 18px;
     font-weight: 800;
     border: 2px solid #e2e8f0;
     border-radius: 10px;
     background: #fff;
     flex: 0 0 auto;
+    height: 34px;
     -moz-appearance: textfield;
   }
 
@@ -484,7 +503,6 @@
   .btn-delete:hover { background: #fed7d7; }
   .btn-delete:active { transform: scale(0.9); }
 
-  /* Empty */
   .empty-state {
     text-align: center;
     padding: 40px 20px;
@@ -493,7 +511,6 @@
   .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
   .empty-state p { font-size: 16px; line-height: 1.7; font-weight: 500; }
 
-  /* Toast */
   .toast {
     position: fixed;
     bottom: 30px;
@@ -501,7 +518,7 @@
     transform: translateX(-50%) translateY(100px);
     background: #2d3748;
     color: white;
-    padding: 14px 28px;
+    padding: 0 28px;
     border-radius: 14px;
     font-size: 15px;
     font-weight: 700;
@@ -512,6 +529,9 @@
     pointer-events: none;
     white-space: nowrap;
     font-family: inherit;
+    height: 48px;
+    display: flex;
+    align-items: center;
   }
 
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -519,13 +539,34 @@
   .toast.error { background: #e53e3e; }
   .toast.info { background: #3182ce; }
 
-  /* Drag */
   .drag-handle { cursor: grab; color: #cbd5e0; font-size: 16px; user-select: none; padding: 0 4px; }
   .drag-handle:active { cursor: grabbing; }
   tbody tr.dragging { opacity: 0.5; background: #edf2f7; }
   tbody tr.drag-over { border-top: 3px solid #667eea; }
 
-  /* Footer */
+  .btn-full-reset {
+    width: 100%;
+    height: 44px;
+    background: #fff5f5;
+    color: #c53030;
+    border: 2px dashed #fed7d7;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 20px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-full-reset:hover {
+    background: #fed7d7;
+    border-color: #fc8181;
+  }
+
   .footer {
     text-align: center;
     margin-top: 20px;
@@ -534,7 +575,6 @@
     color: rgba(255,255,255,0.7);
   }
 
-  /* Dark toggle */
   .dark-toggle {
     position: absolute;
     top: 16px;
@@ -555,50 +595,31 @@
   }
   .dark-toggle:hover { background: rgba(255,255,255,0.3); }
 
-  /* ===== Dark mode ===== */
   body.dark { background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%); }
   body.dark .card { background: rgba(45,55,72,0.97); color: #e2e8f0; }
   body.dark h1 { color: #e2e8f0; }
   body.dark .title-display .company-text { color: #e2e8f0; }
   body.dark .title-display .btn-edit-title { background: #4a5568; color: #a0aec0; }
   body.dark .title-display .btn-edit-title:hover { background: #2d3748; color: #e2e8f0; }
-  body.dark .title-edit-form input { background: #4a5568; border-color: #667eea; color: #e2e8f0; }
-  body.dark .title-edit-form .btn-cancel-title { background: #4a5568; color: #a0aec0; }
-  body.dark .title-edit-form .btn-clear-title { background: #742a2a; color: #feb2b2; }
   body.dark .section-label { color: #a0aec0; }
-
   body.dark input { background: #4a5568; border-color: #4a5568; color: #e2e8f0; }
   body.dark input:focus { border-color: #667eea; background: #2d3748; }
-  body.dark input:disabled { background: #3a4556; opacity: 0.7; }
-
-  /* 다크모드 select - input과 동일한 배경 */
-  body.dark select {
-    background-color: #4a5568;
-    border-color: #4a5568;
-    color: #e2e8f0;
-  }
-  body.dark select:focus {
-    border-color: #667eea;
-    background-color: #2d3748;
-  }
-  body.dark select:disabled {
-    background-color: #3a4556;
-    opacity: 0.7;
-  }
-  body.dark .account-inline select {
-    background-color: #4a5568;
-    border-color: #4a5568;
-    color: #e2e8f0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a0aec0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 12px;
-  }
-  body.dark .account-inline select option {
-    background-color: #4a5568;
-    color: #e2e8f0;
-  }
-
+  body.dark .bank-select-trigger { background: #4a5568; border-color: #4a5568; color: #e2e8f0; }
+  body.dark .bank-select-trigger.placeholder { color: #718096; }
+  body.dark .bank-select-trigger:hover { border-color: #667eea; background: #2d3748; }
+  body.dark .bank-select.open .bank-select-trigger { border-color: #667eea; background: #2d3748; }
+  body.dark .bank-select-trigger::after { color: #718096; }
+  body.dark .bank-select-dropdown { background: #4a5568; border-color: #4a5568; box-shadow: 0 12px 28px rgba(0,0,0,0.3); }
+  body.dark .bank-select-item { color: #e2e8f0; }
+  body.dark .bank-select-item:hover { background: #2d3748; }
+  body.dark .bank-select-item.selected { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+  body.dark .saved-display { background: #4a5568; border-color: #4a5568; color: #e2e8f0; }
+  body.dark .btn-edit-pencil { background: #2d3748; color: #a0aec0; }
+  body.dark .btn-edit-pencil:hover { background: #1a202c; color: #e2e8f0; }
+  body.dark .btn-cancel-inline { background: #4a5568 !important; color: #a0aec0 !important; }
+  body.dark .btn-cancel-inline:hover { background: #2d3748 !important; }
+  body.dark .btn-danger { background: #742a2a; color: #feb2b2; }
+  body.dark .btn-danger:hover { background: #9b2c2c; }
   body.dark thead th { background: #4a5568; color: #a0aec0; border-bottom-color: #4a5568; }
   body.dark td { border-bottom-color: #4a5568; color: #e2e8f0; }
   body.dark td:first-child { color: #e2e8f0; }
@@ -609,26 +630,16 @@
   body.dark .btn-delete { background: #742a2a; color: #feb2b2; }
   body.dark .divider { background: linear-gradient(90deg, transparent, #4a5568, transparent); }
   body.dark .counter-control input { background: #2d3748; border-color: #4a5568; color: #e2e8f0; }
-  body.dark .account-display { background: #4a5568; border-color: #4a5568; color: #e2e8f0; }
-  body.dark .account-display .btn-edit-inline { background: #2d3748; color: #a0aec0; }
-  body.dark .account-display .btn-edit-inline:hover { background: #1a202c; }
-  body.dark .btn-cancel-account { background: #4a5568; color: #a0aec0; }
+  body.dark .btn-full-reset { background: #2d2020; color: #fc8181; border-color: #742a2a; }
+  body.dark .btn-full-reset:hover { background: #742a2a; border-color: #fc8181; }
 
-  /* 📱 Mobile */
   @media (max-width: 768px) {
     body { padding: 12px; padding-top: env(safe-area-inset-top, 12px); }
     .card { padding: 20px 16px; border-radius: 16px; }
     h1 { font-size: 24px; margin-bottom: 18px; }
     .title-display .company-text { font-size: 24px; }
-    .title-edit-form input { font-size: 16px; width: 140px; }
     .input-group { flex-direction: column; gap: 8px; }
     .input-group.inline { flex-direction: row; }
-
-    .account-inline { flex-wrap: wrap; }
-    .account-inline select { min-width: 80px; font-size: 14px; }
-    .account-inline input { min-width: 0; font-size: 15px; }
-    .account-inline .btn-edit-account { font-size: 13px; padding: 10px 12px; }
-
     .btn-group { flex-wrap: wrap; }
     .btn-group button { flex: 1 1 calc(50% - 4px); min-width: 0; }
     .summary-banner { padding: 12px 14px; }
@@ -640,6 +651,8 @@
     .counter-control input[type="number"] { width: 46px; font-size: 16px; }
     .counter-btn { width: 32px; height: 32px; font-size: 18px; }
     .dark-toggle { top: 20px; right: 20px; }
+    .bank-select { width: 100px; }
+    #accountHolder { width: 72px; }
   }
 
   @media (max-width: 380px) {
@@ -647,8 +660,8 @@
     .counter-control input[type="number"] { width: 40px; }
     td { padding: 8px 2px; font-size: 14px; }
     .total-cell { font-size: 13px; }
-    .account-inline select { min-width: 70px; font-size: 13px; padding: 8px 8px; }
-    .account-inline input { font-size: 14px; padding: 8px 10px; }
+    .bank-select { width: 88px; }
+    #accountHolder { width: 64px; }
   }
 </style>
 </head>
@@ -658,7 +671,6 @@
 
 <div class="card" id="app">
 
-  <!-- 타이틀 -->
   <div class="title-area">
     <div id="titleDisplay" style="display:none;">
       <div class="title-display">
@@ -667,12 +679,12 @@
       </div>
     </div>
     <div id="titleEditForm" style="display:none;">
-      <h1>🍱 월말 점심값 계산기</h1>
-      <div class="title-edit-form" style="margin-top:12px;">
+      <h1 style="margin-bottom:12px;">🍱 월말 점심값 계산기</h1>
+      <div class="input-group inline" style="margin-bottom:0;">
         <input type="text" id="companyInput" placeholder="회사명 입력" maxlength="20" onkeydown="if(event.key==='Enter') saveCompanyName();">
-        <button class="btn-save-title" onclick="saveCompanyName()">저장</button>
-        <button class="btn-cancel-title" id="btnCancelTitle" onclick="cancelEditCompany()" style="display:none;">취소</button>
-        <button class="btn-clear-title" id="btnClearTitle" onclick="clearCompanyName()" style="display:none;">삭제</button>
+        <button class="btn-primary" onclick="saveCompanyName()" tabindex="-1">저장</button>
+        <button class="btn-primary btn-cancel-inline" id="btnCancelTitle" onclick="cancelEditCompany()" tabindex="-1" style="display:none;">취소</button>
+        <button class="btn-danger" id="btnClearTitle" onclick="clearCompanyName()" tabindex="-1" style="display:none;">삭제</button>
       </div>
     </div>
     <div id="titleDefault">
@@ -681,50 +693,35 @@
   </div>
 
   <span class="section-label">💰 점심값 설정</span>
-  <div class="input-group inline">
-    <input type="number" id="price" onfocus="this.select()" onkeydown="handlePriceEnter(event)" inputmode="numeric" pattern="[0-9]*" />
-    <button class="btn-primary" onclick="savePrice()" tabindex="-1">저장</button>
+  <div class="saved-display" id="priceDisplay" style="display:none;">
+    <span class="saved-text" id="priceDisplayText"></span>
+    <button class="btn-edit-pencil" onclick="editPrice()" title="점심값 수정">✏️</button>
+  </div>
+  <div id="priceEditSection">
+    <div class="input-group inline">
+      <input type="number" id="price" placeholder="점심값 입력" onfocus="this.select()" onkeydown="handlePriceEnter(event)" inputmode="numeric" pattern="[0-9]*" />
+      <button class="btn-primary" onclick="savePrice()" tabindex="-1">저장</button>
+      <button class="btn-primary btn-cancel-inline" id="btnCancelPrice" onclick="cancelEditPrice()" tabindex="-1" style="display:none;">취소</button>
+    </div>
   </div>
 
   <div class="divider"></div>
 
   <span class="section-label">💸 입금 계좌</span>
-
-  <div class="account-display" id="accountDisplay" style="display:none;">
-    <span class="account-text" id="accountDisplayText"></span>
-    <button class="btn-edit-inline" onclick="editAccount()">수정</button>
+  <div class="saved-display" id="accountDisplay" style="display:none;">
+    <span class="saved-text" id="accountDisplayText"></span>
+    <button class="btn-edit-pencil" onclick="editAccount()" title="입금 계좌 수정">✏️</button>
   </div>
-
-  <div class="account-section" id="accountEditSection">
-    <div class="account-inline">
-      <select id="bankSelect">
-        <option value="">은행</option>
-        <option value="기업">기업</option>
-        <option value="국민">국민</option>
-        <option value="신한">신한</option>
-        <option value="우리">우리</option>
-        <option value="하나">하나</option>
-        <option value="농협">농협</option>
-        <option value="SC제일">SC제일</option>
-        <option value="씨티">씨티</option>
-        <option value="카카오뱅크">카카오뱅크</option>
-        <option value="토스뱅크">토스뱅크</option>
-        <option value="케이뱅크">케이뱅크</option>
-        <option value="우체국">우체국</option>
-        <option value="새마을금고">새마을금고</option>
-        <option value="신협">신협</option>
-        <option value="수협">수협</option>
-        <option value="대구">대구</option>
-        <option value="부산">부산</option>
-        <option value="광주">광주</option>
-        <option value="경남">경남</option>
-        <option value="전북">전북</option>
-        <option value="제주">제주</option>
-      </select>
-      <input type="text" id="accountNumber" placeholder="계좌번호" inputmode="numeric">
-      <input type="text" id="accountHolder" placeholder="예금주">
-      <button class="btn-edit-account btn-save-account" onclick="saveAccount()">저장</button>
-      <button class="btn-edit-account btn-cancel-account" id="btnCancelAccount" onclick="cancelEditAccount()" style="display:none;">취소</button>
+  <div id="accountEditSection">
+    <div class="input-group inline">
+      <div class="bank-select" id="bankSelect">
+        <div class="bank-select-trigger placeholder" id="bankTrigger" onclick="toggleBankDropdown()">은행 선택</div>
+        <div class="bank-select-dropdown" id="bankDropdown"></div>
+      </div>
+      <input type="text" id="accountNumber" placeholder="계좌번호" inputmode="numeric" onkeydown="handleAccountNumberEnter(event)">
+      <input type="text" id="accountHolder" placeholder="예금주" onkeydown="handleAccountHolderEnter(event)">
+      <button class="btn-primary" onclick="saveAccount()" tabindex="-1">저장</button>
+      <button class="btn-primary btn-cancel-inline" id="btnCancelAccount" onclick="cancelEditAccount()" tabindex="-1" style="display:none;">취소</button>
     </div>
   </div>
 
@@ -737,7 +734,7 @@
   </div>
 
   <div class="btn-group">
-    <button class="btn-reset" onclick="resetAll()" tabindex="-1">🗑️ 초기화</button>
+    <button class="btn-reset" onclick="resetPeople()" tabindex="-1">🗑️ 초기화</button>
     <button class="btn-copy" onclick="copyResult()" tabindex="-1">📋 복사</button>
     <button class="btn-export" onclick="exportCSV()" tabindex="-1">📥 CSV</button>
   </div>
@@ -748,7 +745,7 @@
       <span class="value" id="sumPeople">0</span>
     </div>
     <div class="summary-item">
-      <span class="label">총 식수</span>
+      <span class="label">총 식사수</span>
       <span class="value" id="sumCount">0</span>
     </div>
     <div class="summary-item">
@@ -775,27 +772,154 @@
     <p>아직 등록된 인원이 없습니다.<br>위에서 이름을 추가해 주세요!</p>
   </div>
 
+  <button class="btn-full-reset" onclick="resetEverything()">⚠️ 전체 초기화 (모든 설정 · 데이터 삭제)</button>
+
 </div>
 
-<div class="footer">Made by junyoung❤️ · 데이터는 브라우저에 자동 저장됩니다</div>
-
+<div class="footer">Made with ❤️ · 데이터는 브라우저에 자동 저장됩니다</div>
 <div class="toast" id="toast"></div>
 
 <script>
 let people = JSON.parse(localStorage.getItem("people")) || [];
 let price = Number(localStorage.getItem("price")) || 6000;
 let dragIdx = null;
+let isEditMode = false;
+let selectedBank = "";
 
-document.getElementById("price").value = price;
+const BANKS = [
+  "국민","신한","우리","하나","농협","기업",
+  "카카오뱅크","토스뱅크","케이뱅크",
+  "SC제일","씨티","우체국","새마을금고","신협","수협",
+  "대구","부산","광주","경남","전북","제주"
+];
+
+// =====================
+// 은행 클릭형 드롭다운
+// =====================
+const bankSelect = document.getElementById("bankSelect");
+const bankTrigger = document.getElementById("bankTrigger");
+const bankDropdown = document.getElementById("bankDropdown");
+
+function buildBankDropdown() {
+  bankDropdown.innerHTML = "";
+  BANKS.forEach(bank => {
+    const div = document.createElement("div");
+    div.className = "bank-select-item" + (bank === selectedBank ? " selected" : "");
+    div.textContent = bank;
+    div.addEventListener("click", function(e) {
+      e.stopPropagation();
+      pickBank(bank);
+    });
+    bankDropdown.appendChild(div);
+  });
+}
+
+function toggleBankDropdown() {
+  const isOpen = bankSelect.classList.contains("open");
+  if (isOpen) {
+    closeBankDropdown();
+  } else {
+    buildBankDropdown();
+    bankSelect.classList.add("open");
+    // 선택된 항목으로 스크롤
+    setTimeout(() => {
+      const sel = bankDropdown.querySelector(".selected");
+      if (sel) sel.scrollIntoView({ block: "nearest" });
+    }, 50);
+  }
+}
+
+function pickBank(bank) {
+  selectedBank = bank;
+  bankTrigger.textContent = bank;
+  bankTrigger.classList.remove("placeholder");
+  closeBankDropdown();
+  document.getElementById("accountNumber").focus();
+}
+
+function closeBankDropdown() {
+  bankSelect.classList.remove("open");
+}
+
+function resetBankSelect() {
+  selectedBank = "";
+  bankTrigger.textContent = "은행 선택";
+  bankTrigger.classList.add("placeholder");
+}
+
+function setBankSelect(bank) {
+  if (bank && BANKS.includes(bank)) {
+    selectedBank = bank;
+    bankTrigger.textContent = bank;
+    bankTrigger.classList.remove("placeholder");
+  } else {
+    resetBankSelect();
+  }
+}
+
+document.addEventListener("click", function(e) {
+  if (!e.target.closest("#bankSelect")) closeBankDropdown();
+});
+
+document.addEventListener("keydown", function(e) {
+  if (!bankSelect.classList.contains("open")) return;
+  if (e.key === "Escape") { closeBankDropdown(); return; }
+  // 키보드로 첫 글자 빠른 탐색
+  if (e.key.length === 1) {
+    const match = BANKS.find(b => b.startsWith(e.key));
+    if (match) {
+      pickBank(match);
+    }
+  }
+});
+
+function handleAccountNumberEnter(e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    document.getElementById("accountHolder").focus();
+  }
+}
+
+function handleAccountHolderEnter(e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    saveAccount();
+  }
+}
+
+// =====================
+// 초기 설정 흐름
+// =====================
+function isInitialSetup() {
+  return !(localStorage.getItem("companyName") && localStorage.getItem("price") && localStorage.getItem("account"));
+}
+
+function focusNextUnsaved() {
+  if (!localStorage.getItem("companyName")) { showCompanyEdit(); return; }
+  if (!localStorage.getItem("price") || Number(localStorage.getItem("price")) <= 0) {
+    showPriceEdit(false);
+    setTimeout(() => document.getElementById("price").focus(), 100);
+    return;
+  }
+  const acct = JSON.parse(localStorage.getItem("account") || "{}");
+  if (!acct.bank || !acct.number || !acct.holder) {
+    showAccountEdit(false);
+    return;
+  }
+  focusNameInput();
+}
+
+function focusNameInput() {
+  setTimeout(() => document.getElementById("nameInput").focus(), 100);
+}
 
 // =====================
 // 회사명
 // =====================
 function initTitleView() {
   const company = localStorage.getItem("companyName") || "";
-  if (company) {
-    showTitleDisplay(company);
-  } else {
+  if (company) { showTitleDisplay(company); }
+  else {
     document.getElementById("titleDefault").style.display = "block";
     document.getElementById("titleDisplay").style.display = "none";
     document.getElementById("titleEditForm").style.display = "none";
@@ -811,11 +935,12 @@ function showTitleDisplay(name) {
 
 function showCompanyEdit() {
   const company = localStorage.getItem("companyName") || "";
+  isEditMode = !!company;
   document.getElementById("titleDefault").style.display = "none";
   document.getElementById("titleDisplay").style.display = "none";
   document.getElementById("titleEditForm").style.display = "block";
   document.getElementById("companyInput").value = company;
-  document.getElementById("btnCancelTitle").style.display = "inline-flex";
+  document.getElementById("btnCancelTitle").style.display = company ? "inline-flex" : "none";
   document.getElementById("btnClearTitle").style.display = company ? "inline-flex" : "none";
   setTimeout(() => document.getElementById("companyInput").focus(), 100);
 }
@@ -825,16 +950,17 @@ function editCompanyName() { showCompanyEdit(); }
 function saveCompanyName() {
   const name = document.getElementById("companyInput").value.trim();
   if (!name) { showToast("회사명을 입력하세요", "error"); return; }
+  const wasEdit = isEditMode;
   localStorage.setItem("companyName", name);
   showTitleDisplay(name);
   showToast(`"${name}" 저장 완료!`);
+  if (wasEdit) { focusNameInput(); } else { focusNextUnsaved(); }
 }
 
 function cancelEditCompany() {
   const company = localStorage.getItem("companyName") || "";
-  if (company) {
-    showTitleDisplay(company);
-  } else {
+  if (company) { showTitleDisplay(company); }
+  else {
     document.getElementById("titleDefault").style.display = "block";
     document.getElementById("titleEditForm").style.display = "none";
     document.getElementById("titleDisplay").style.display = "none";
@@ -853,15 +979,65 @@ function clearCompanyName() {
 initTitleView();
 
 // =====================
+// 점심값
+// =====================
+function initPriceView() {
+  const saved = localStorage.getItem("price");
+  if (saved && Number(saved) > 0) { price = Number(saved); showPriceDisplay(); }
+  else { showPriceEdit(false); }
+}
+
+function showPriceDisplay() {
+  document.getElementById("priceDisplay").style.display = "flex";
+  document.getElementById("priceEditSection").style.display = "none";
+  document.getElementById("priceDisplayText").textContent = formatWon(price);
+}
+
+function showPriceEdit(showCancel) {
+  document.getElementById("priceDisplay").style.display = "none";
+  document.getElementById("priceEditSection").style.display = "block";
+  document.getElementById("btnCancelPrice").style.display = showCancel ? "inline-flex" : "none";
+  const saved = localStorage.getItem("price");
+  document.getElementById("price").value = (saved && Number(saved) > 0) ? Number(saved) : "";
+}
+
+function editPrice() {
+  isEditMode = true;
+  showPriceEdit(true);
+  setTimeout(() => document.getElementById("price").focus(), 100);
+}
+
+function cancelEditPrice() { showPriceDisplay(); }
+
+function handlePriceEnter(e) {
+  if (e.key !== "Enter") return;
+  e.preventDefault();
+  savePrice();
+}
+
+function savePrice() {
+  const val = Number(document.getElementById("price").value);
+  if (val <= 0) { showToast("올바른 금액을 입력하세요", "error"); return; }
+  const wasFirstSave = !localStorage.getItem("price") || Number(localStorage.getItem("price")) <= 0;
+  price = val;
+  localStorage.setItem("price", price);
+  showPriceDisplay();
+  updateTotalsOnly();
+  updateSummary();
+  showToast(`점심값 ${formatWon(price)}으로 저장!`);
+  if (isEditMode && !wasFirstSave) { focusNameInput(); } else { focusNextUnsaved(); }
+  isEditMode = false;
+}
+
+initPriceView();
+
+// =====================
 // 계좌
 // =====================
 function initAccountView() {
   const a = JSON.parse(localStorage.getItem("account")) || {};
-  if (a.bank && a.number && a.holder) {
-    showAccountDisplay();
-  } else {
-    showAccountEdit(false);
-  }
+  if (a.bank && a.number && a.holder) { showAccountDisplay(); }
+  else { showAccountEdit(false); }
 }
 
 function showAccountDisplay() {
@@ -876,27 +1052,38 @@ function showAccountEdit(showCancel) {
   document.getElementById("accountDisplay").style.display = "none";
   document.getElementById("accountEditSection").style.display = "block";
   document.getElementById("btnCancelAccount").style.display = showCancel ? "inline-flex" : "none";
-  if (a.bank) document.getElementById("bankSelect").value = a.bank;
+  setBankSelect(a.bank || "");
   if (a.number) document.getElementById("accountNumber").value = a.number;
   if (a.holder) document.getElementById("accountHolder").value = a.holder;
 }
 
 function editAccount() {
+  isEditMode = true;
   showAccountEdit(true);
-  document.getElementById("bankSelect").focus();
 }
 
 function saveAccount() {
-  const bank = document.getElementById("bankSelect").value;
+  const bank = selectedBank;
   const number = document.getElementById("accountNumber").value.trim();
   const holder = document.getElementById("accountHolder").value.trim();
-  if (!bank || !number || !holder) {
-    showToast("은행, 계좌번호, 예금주를 모두 입력하세요", "error");
+  if (!bank) {
+    showToast("은행을 선택하세요", "error");
+    toggleBankDropdown();
     return;
   }
+  if (!number || !holder) {
+    showToast("계좌번호와 예금주를 입력하세요", "error");
+    if (!number) document.getElementById("accountNumber").focus();
+    else document.getElementById("accountHolder").focus();
+    return;
+  }
+  const wasFirstSave = !localStorage.getItem("account") ||
+    (() => { const a = JSON.parse(localStorage.getItem("account") || "{}"); return !a.bank || !a.number || !a.holder; })();
   localStorage.setItem("account", JSON.stringify({ bank, number, holder }));
   showAccountDisplay();
   showToast("💸 계좌 정보 저장!", "info");
+  if (isEditMode && !wasFirstSave) { focusNameInput(); } else { focusNextUnsaved(); }
+  isEditMode = false;
 }
 
 function cancelEditAccount() { showAccountDisplay(); }
@@ -908,6 +1095,8 @@ function getAccountString() {
 }
 
 initAccountView();
+
+if (isInitialSetup()) { setTimeout(() => focusNextUnsaved(), 300); }
 
 // =====================
 // Dark mode
@@ -923,9 +1112,6 @@ function toggleDark() {
   document.querySelector(".dark-toggle").textContent = isDark ? "☀️" : "🌙";
 }
 
-// =====================
-// Toast
-// =====================
 function showToast(msg, type = "success") {
   const t = document.getElementById("toast");
   t.textContent = msg;
@@ -935,27 +1121,7 @@ function showToast(msg, type = "success") {
   setTimeout(() => t.classList.remove("show"), 2200);
 }
 
-// =====================
-// Core
-// =====================
 function handleEnter(e) { if (e.key === "Enter") addPerson(); }
-
-function handlePriceEnter(e) {
-  if (e.key !== "Enter") return;
-  e.preventDefault();
-  savePrice();
-  document.getElementById("nameInput").focus();
-}
-
-function savePrice() {
-  const val = Number(document.getElementById("price").value);
-  if (val <= 0) { showToast("올바른 금액을 입력하세요", "error"); return; }
-  price = val;
-  localStorage.setItem("price", price);
-  updateTotalsOnly();
-  updateSummary();
-  showToast(`점심값 ${formatWon(price)}으로 저장!`);
-}
 
 function addPerson() {
   const input = document.getElementById("nameInput");
@@ -981,13 +1147,48 @@ function removePerson(index) {
   showToast(`${name} 삭제됨`, "info");
 }
 
-function resetAll() {
-  if (!confirm("모든 목록과 횟수를 초기화할까요?")) return;
+function resetPeople() {
+  if (people.length === 0) { showToast("초기화할 데이터가 없습니다", "error"); return; }
+  if (!confirm("인원 목록과 횟수를 초기화할까요?")) return;
   people = [];
   localStorage.removeItem("people");
   render();
   updateSummary();
-  showToast("초기화 완료!", "info");
+  showToast("인원 목록 초기화 완료!", "info");
+}
+
+function resetEverything() {
+  if (!confirm("⚠️ 회사명, 점심값, 계좌, 인원 등\n모든 설정과 데이터를 삭제할까요?\n\n이 작업은 되돌릴 수 없습니다.")) return;
+  const darkMode = localStorage.getItem("dark");
+  localStorage.clear();
+  if (darkMode) localStorage.setItem("dark", darkMode);
+
+  people = [];
+  price = 6000;
+
+  document.getElementById("companyInput").value = "";
+  document.getElementById("price").value = "";
+  resetBankSelect();
+  document.getElementById("accountNumber").value = "";
+  document.getElementById("accountHolder").value = "";
+  document.getElementById("nameInput").value = "";
+
+  document.getElementById("titleDefault").style.display = "block";
+  document.getElementById("titleDisplay").style.display = "none";
+  document.getElementById("titleEditForm").style.display = "none";
+
+  document.getElementById("priceDisplay").style.display = "none";
+  document.getElementById("priceEditSection").style.display = "block";
+  document.getElementById("btnCancelPrice").style.display = "none";
+
+  document.getElementById("accountDisplay").style.display = "none";
+  document.getElementById("accountEditSection").style.display = "block";
+  document.getElementById("btnCancelAccount").style.display = "none";
+
+  render();
+  updateSummary();
+  showToast("⚠️ 전체 초기화 완료!", "error");
+  setTimeout(() => focusNextUnsaved(), 500);
 }
 
 function saveAll() {
@@ -1002,16 +1203,13 @@ function render() {
   const tbody = document.getElementById("list");
   const empty = document.getElementById("emptyState");
   tbody.innerHTML = "";
-
   if (people.length === 0) {
     empty.style.display = "block";
     document.getElementById("summaryBanner").style.display = "none";
     return;
   }
-
   empty.style.display = "none";
   document.getElementById("summaryBanner").style.display = "flex";
-
   people.forEach((p, i) => {
     const tr = document.createElement("tr");
     tr.draggable = true;
@@ -1099,7 +1297,6 @@ document.getElementById("list").addEventListener("keydown", function(e) {
   }
 });
 
-// Drag
 function handleDragStart(e) {
   dragIdx = Number(this.dataset.index);
   this.classList.add("dragging");
@@ -1127,27 +1324,21 @@ function handleDragEnd() {
   dragIdx = null;
 }
 
-// Copy
 function copyResult() {
   if (people.length === 0) { showToast("복사할 데이터가 없습니다", "error"); return; }
-
   const now = new Date();
   const company = localStorage.getItem("companyName") || "";
   const prefix = company ? `${company} ` : "";
   const title = `📅 ${prefix}${now.getFullYear()}년 ${now.getMonth()+1}월 점심 정산`;
   const divider = "─".repeat(24);
-
   const lines = people.map(p => {
     const total = p.count * price;
     return `  ${p.name}  │  ${price.toLocaleString()} × ${p.count}회  =  ${total.toLocaleString("ko-KR")}원`;
   });
-
   const parts = [title, divider, ...lines, divider];
   const accountStr = getAccountString();
   if (accountStr) parts.push(`  ${accountStr}`);
-
   const resultText = parts.join("\n");
-
   navigator.clipboard.writeText(resultText).then(() => {
     showToast("📋 정산 내역 복사 완료!");
   }).catch(() => {
@@ -1161,19 +1352,16 @@ function copyResult() {
   });
 }
 
-// CSV
 function exportCSV() {
   if (people.length === 0) { showToast("내보낼 데이터가 없습니다", "error"); return; }
   const now = new Date();
   const month = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
   let csv = "\uFEFF이름,횟수,단가,합계\n";
   people.forEach(p => { csv += `${p.name},${p.count},${price},${p.count * price}\n`; });
-
   const a = JSON.parse(localStorage.getItem("account")) || {};
   if (a.bank && a.number && a.holder) {
     csv += `\n입금계좌,${a.bank} ${a.number} ${a.holder},,\n`;
   }
-
   const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
@@ -1185,6 +1373,7 @@ function exportCSV() {
 }
 
 render();
+buildBankDropdown();
 </script>
 
 </body>
