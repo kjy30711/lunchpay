@@ -6,131 +6,939 @@
 <title>월말 점심값 계산기</title>
 
 <style>
-  /* 💻 PC 기본 디자인 유지 */
-  body { 
-    font-family: Arial; 
-    max-width: 600px; 
-    margin: 40px auto; 
-  }
-
-  h1 { text-align: center; }
-
-  input, button { 
-    padding: 6px; 
-    margin: 4px; 
-    font-size: 14px;
+  * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
 
-  table { 
-    width: 100%; 
-    border-collapse: collapse; 
-    margin-top: 20px; 
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', 'Segoe UI', sans-serif;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: -0.3px;
   }
 
-  th, td { 
-    border: 1px solid #ddd; 
-    padding: 2px; 
-    text-align: center; 
-    word-break: keep-all;
+  .card {
+    background: rgba(255,255,255,0.97);
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
   }
 
-  th { background: #f2f2f2; }
+  /* 타이틀 영역 */
+  .title-area {
+    text-align: center;
+    margin-bottom: 24px;
+    position: relative;
+  }
 
-  /* 📱 모바일 전용 자동 조절 */
+  h1 {
+    font-size: 28px;
+    color: #2d3748;
+    letter-spacing: -0.5px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: default;
+  }
+
+  .title-display {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .title-display .company-text {
+    font-size: 28px;
+    font-weight: 800;
+    color: #2d3748;
+    letter-spacing: -0.5px;
+  }
+
+  .title-display .btn-edit-title {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: #edf2f7;
+    color: #718096;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+
+  .title-display .btn-edit-title:hover {
+    background: #e2e8f0;
+    color: #4a5568;
+  }
+
+  .title-edit-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .title-edit-form input {
+    padding: 8px 14px;
+    font-size: 18px;
+    font-weight: 700;
+    border: 2px solid #667eea;
+    border-radius: 10px;
+    outline: none;
+    text-align: center;
+    width: 180px;
+    font-family: inherit;
+    background: #f7fafc;
+    transition: box-shadow 0.2s;
+  }
+
+  .title-edit-form input:focus {
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.15);
+  }
+
+  .title-edit-form button {
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+
+  .title-edit-form .btn-save-title {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+  }
+
+  .title-edit-form .btn-cancel-title {
+    background: #edf2f7;
+    color: #4a5568;
+  }
+
+  .title-edit-form .btn-clear-title {
+    background: #fed7d7;
+    color: #c53030;
+  }
+
+  .section-label {
+    font-size: 15px;
+    font-weight: 800;
+    color: #4a5568;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .input-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    align-items: stretch;
+  }
+
+  input[type="number"],
+  input[type="text"] {
+    flex: 1;
+    padding: 12px 14px;
+    font-size: 17px;
+    font-weight: 500;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: #f7fafc;
+    min-width: 0;
+    font-family: inherit;
+    letter-spacing: -0.2px;
+  }
+
+  input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.15);
+    background: #fff;
+  }
+
+  input:disabled, select:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background: #edf2f7;
+  }
+
+  button {
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: inherit;
+    letter-spacing: -0.2px;
+  }
+
+  button:active { transform: scale(0.96); }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102,126,234,0.4);
+  }
+  .btn-primary:hover { box-shadow: 0 6px 20px rgba(102,126,234,0.6); }
+
+  .btn-add {
+    background: linear-gradient(135deg, #48bb78, #38a169);
+    color: white;
+    box-shadow: 0 4px 15px rgba(72,187,120,0.4);
+  }
+  .btn-add:hover { box-shadow: 0 6px 20px rgba(72,187,120,0.6); }
+
+  .btn-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .btn-reset { flex: 1; background: #fed7d7; color: #c53030; }
+  .btn-reset:hover { background: #feb2b2; }
+  .btn-copy { flex: 1; background: #c6f6d5; color: #276749; }
+  .btn-copy:hover { background: #9ae6b4; }
+  .btn-export { flex: 1; background: #bee3f8; color: #2b6cb0; }
+  .btn-export:hover { background: #90cdf4; }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+    margin: 20px 0;
+  }
+
+  /* 계좌 */
+  .account-section { margin-bottom: 8px; }
+
+  .account-inline {
+    display: flex;
+    gap: 6px;
+    align-items: stretch;
+  }
+
+  .account-inline select {
+    padding: 10px 12px;
+    font-size: 15px;
+    font-weight: 600;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    outline: none;
+    background-color: #f7fafc;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    font-family: inherit;
+    color: #333;
+    cursor: pointer;
+    min-width: 90px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+    padding-right: 26px;
+  }
+
+  .account-inline select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.15);
+  }
+
+  .account-inline input { flex: 1; min-width: 0; }
+
+  .account-inline .btn-edit-account {
+    padding: 10px 14px;
+    font-size: 14px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+  }
+
+  .account-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #f7fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3748;
+  }
+
+  .account-display .account-text {
+    flex: 1;
+    letter-spacing: -0.2px;
+  }
+
+  .account-display .btn-edit-inline {
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 8px;
+    border: none;
+    background: #edf2f7;
+    color: #4a5568;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+
+  .account-display .btn-edit-inline:hover { background: #e2e8f0; }
+
+  .btn-save-account {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+  }
+
+  .btn-cancel-account {
+    background: #edf2f7;
+    color: #4a5568;
+  }
+
+  /* Summary */
+  .summary-banner {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 14px;
+    padding: 14px 20px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-around;
+    color: white;
+    text-align: center;
+  }
+
+  .summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .summary-item .label {
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+  }
+
+  .summary-item .value {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+  }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 6px;
+  }
+
+  thead th {
+    background: #f7fafc;
+    padding: 14px 8px;
+    font-size: 14px;
+    font-weight: 800;
+    color: #4a5568;
+    letter-spacing: 0.3px;
+    border-bottom: 2px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  thead th:first-child { border-radius: 12px 0 0 0; }
+  thead th:last-child { border-radius: 0 12px 0 0; }
+
+  tbody tr { transition: background 0.15s; }
+  tbody tr:hover { background: #f0f4ff; }
+  tbody tr.highlight { animation: highlightFade 1s ease; }
+
+  @keyframes highlightFade {
+    0% { background: #c6f6d5; }
+    100% { background: transparent; }
+  }
+
+  td {
+    padding: 12px 8px;
+    text-align: center;
+    border-bottom: 1px solid #edf2f7;
+    font-size: 16px;
+    font-weight: 500;
+    vertical-align: middle;
+    letter-spacing: -0.2px;
+  }
+
+  td:first-child { font-weight: 700; color: #2d3748; }
+
+  /* Counter */
+  .counter-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  .counter-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    font-size: 20px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+
+  .counter-btn:active { transform: scale(0.9); }
+  .counter-minus { background: #fed7d7; color: #c53030; }
+  .counter-minus:hover { background: #feb2b2; }
+  .counter-plus { background: #c6f6d5; color: #276749; }
+  .counter-plus:hover { background: #9ae6b4; }
+
+  .counter-control input[type="number"] {
+    width: 52px;
+    text-align: center;
+    padding: 6px 4px;
+    font-size: 18px;
+    font-weight: 800;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    background: #fff;
+    flex: 0 0 auto;
+    -moz-appearance: textfield;
+  }
+
+  .counter-control input[type="number"]::-webkit-outer-spin-button,
+  .counter-control input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .total-cell {
+    font-weight: 800;
+    color: #2d3748;
+    font-size: 16px;
+    letter-spacing: -0.3px;
+  }
+
+  .btn-delete {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: #fff5f5;
+    color: #e53e3e;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .btn-delete:hover { background: #fed7d7; }
+  .btn-delete:active { transform: scale(0.9); }
+
+  /* Empty */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #a0aec0;
+  }
+  .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+  .empty-state p { font-size: 16px; line-height: 1.7; font-weight: 500; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #2d3748;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    pointer-events: none;
+    white-space: nowrap;
+    font-family: inherit;
+  }
+
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.success { background: #38a169; }
+  .toast.error { background: #e53e3e; }
+  .toast.info { background: #3182ce; }
+
+  /* Drag */
+  .drag-handle { cursor: grab; color: #cbd5e0; font-size: 16px; user-select: none; padding: 0 4px; }
+  .drag-handle:active { cursor: grabbing; }
+  tbody tr.dragging { opacity: 0.5; background: #edf2f7; }
+  tbody tr.drag-over { border-top: 3px solid #667eea; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* Dark toggle */
+  .dark-toggle {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    padding: 0;
+  }
+  .dark-toggle:hover { background: rgba(255,255,255,0.3); }
+
+  /* ===== Dark mode ===== */
+  body.dark { background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%); }
+  body.dark .card { background: rgba(45,55,72,0.97); color: #e2e8f0; }
+  body.dark h1 { color: #e2e8f0; }
+  body.dark .title-display .company-text { color: #e2e8f0; }
+  body.dark .title-display .btn-edit-title { background: #4a5568; color: #a0aec0; }
+  body.dark .title-display .btn-edit-title:hover { background: #2d3748; color: #e2e8f0; }
+  body.dark .title-edit-form input { background: #4a5568; border-color: #667eea; color: #e2e8f0; }
+  body.dark .title-edit-form .btn-cancel-title { background: #4a5568; color: #a0aec0; }
+  body.dark .title-edit-form .btn-clear-title { background: #742a2a; color: #feb2b2; }
+  body.dark .section-label { color: #a0aec0; }
+
+  body.dark input { background: #4a5568; border-color: #4a5568; color: #e2e8f0; }
+  body.dark input:focus { border-color: #667eea; background: #2d3748; }
+  body.dark input:disabled { background: #3a4556; opacity: 0.7; }
+
+  /* 다크모드 select - input과 동일한 배경 */
+  body.dark select {
+    background-color: #4a5568;
+    border-color: #4a5568;
+    color: #e2e8f0;
+  }
+  body.dark select:focus {
+    border-color: #667eea;
+    background-color: #2d3748;
+  }
+  body.dark select:disabled {
+    background-color: #3a4556;
+    opacity: 0.7;
+  }
+  body.dark .account-inline select {
+    background-color: #4a5568;
+    border-color: #4a5568;
+    color: #e2e8f0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a0aec0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+  }
+  body.dark .account-inline select option {
+    background-color: #4a5568;
+    color: #e2e8f0;
+  }
+
+  body.dark thead th { background: #4a5568; color: #a0aec0; border-bottom-color: #4a5568; }
+  body.dark td { border-bottom-color: #4a5568; color: #e2e8f0; }
+  body.dark td:first-child { color: #e2e8f0; }
+  body.dark .total-cell { color: #e2e8f0; }
+  body.dark tbody tr:hover { background: rgba(102,126,234,0.1); }
+  body.dark .counter-minus { background: #742a2a; color: #feb2b2; }
+  body.dark .counter-plus { background: #22543d; color: #9ae6b4; }
+  body.dark .btn-delete { background: #742a2a; color: #feb2b2; }
+  body.dark .divider { background: linear-gradient(90deg, transparent, #4a5568, transparent); }
+  body.dark .counter-control input { background: #2d3748; border-color: #4a5568; color: #e2e8f0; }
+  body.dark .account-display { background: #4a5568; border-color: #4a5568; color: #e2e8f0; }
+  body.dark .account-display .btn-edit-inline { background: #2d3748; color: #a0aec0; }
+  body.dark .account-display .btn-edit-inline:hover { background: #1a202c; }
+  body.dark .btn-cancel-account { background: #4a5568; color: #a0aec0; }
+
+  /* 📱 Mobile */
   @media (max-width: 768px) {
-    body {
-      max-width: 100%;
-      margin: 0;
-      padding: 12px;
-    }
+    body { padding: 12px; padding-top: env(safe-area-inset-top, 12px); }
+    .card { padding: 20px 16px; border-radius: 16px; }
+    h1 { font-size: 24px; margin-bottom: 18px; }
+    .title-display .company-text { font-size: 24px; }
+    .title-edit-form input { font-size: 16px; width: 140px; }
+    .input-group { flex-direction: column; gap: 8px; }
+    .input-group.inline { flex-direction: row; }
 
-    h1 {
-      font-size: 20px;
-      margin: 10px 0;
-    }
+    .account-inline { flex-wrap: wrap; }
+    .account-inline select { min-width: 80px; font-size: 14px; }
+    .account-inline input { min-width: 0; font-size: 15px; }
+    .account-inline .btn-edit-account { font-size: 13px; padding: 10px 12px; }
 
-    input, button {
-      padding: 10px;
-      font-size: 16px;
-      margin: 4px 0;
-      width: 100%;
-    }
+    .btn-group { flex-wrap: wrap; }
+    .btn-group button { flex: 1 1 calc(50% - 4px); min-width: 0; }
+    .summary-banner { padding: 12px 14px; }
+    .summary-item .value { font-size: 22px; }
+    .summary-item .label { font-size: 12px; }
+    table { font-size: 14px; }
+    td { padding: 10px 4px; font-size: 15px; }
+    .total-cell { font-size: 14px; }
+    .counter-control input[type="number"] { width: 46px; font-size: 16px; }
+    .counter-btn { width: 32px; height: 32px; font-size: 18px; }
+    .dark-toggle { top: 20px; right: 20px; }
+  }
 
-    /* ✅ 기본 점심값 입력폼 + 버튼 세로 배치 */
-    #price {
-      width: 100%;
-    }
-
-    /* 버튼들도 줄바꿈 */
-    #app > button {
-      width: 100%;
-    }
-
-    table {
-      table-layout: fixed;
-      font-size: 14px;
-    }
-
-    th, td {
-      padding: 6px 4px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    th:nth-child(1), td:nth-child(1) { width: 22%; }
-    th:nth-child(2), td:nth-child(2) { width: 26%; }
-    th:nth-child(3), td:nth-child(3) { width: 32%; }
-    th:nth-child(4), td:nth-child(4) { width: 20%; }
-
-    td input[type="number"] {
-      width: 100%;
-      min-width: 0;
-    }
+  @media (max-width: 380px) {
+    .summary-item .value { font-size: 18px; }
+    .counter-control input[type="number"] { width: 40px; }
+    td { padding: 8px 2px; font-size: 14px; }
+    .total-cell { font-size: 13px; }
+    .account-inline select { min-width: 70px; font-size: 13px; padding: 8px 8px; }
+    .account-inline input { font-size: 14px; padding: 8px 10px; }
   }
 </style>
 </head>
 <body>
 
-<div id="app">
+<button class="dark-toggle" onclick="toggleDark()" title="다크모드 전환">🌙</button>
 
-<h1>🍱 월말 점심값 계산기</h1>
+<div class="card" id="app">
 
-점심값(원):
-<input type="number" id="price" onfocus="this.select()" onkeydown="handlePriceEnter(event)" inputmode="numeric" pattern="[0-9]*" />
-<button onclick="savePrice()" tabindex="-1">저장</button>
+  <!-- 타이틀 -->
+  <div class="title-area">
+    <div id="titleDisplay" style="display:none;">
+      <div class="title-display">
+        <span class="company-text" id="titleText"></span>
+        <button class="btn-edit-title" onclick="editCompanyName()" title="회사명 수정">✏️</button>
+      </div>
+    </div>
+    <div id="titleEditForm" style="display:none;">
+      <h1>🍱 월말 점심값 계산기</h1>
+      <div class="title-edit-form" style="margin-top:12px;">
+        <input type="text" id="companyInput" placeholder="회사명 입력" maxlength="20" onkeydown="if(event.key==='Enter') saveCompanyName();">
+        <button class="btn-save-title" onclick="saveCompanyName()">저장</button>
+        <button class="btn-cancel-title" id="btnCancelTitle" onclick="cancelEditCompany()" style="display:none;">취소</button>
+        <button class="btn-clear-title" id="btnClearTitle" onclick="clearCompanyName()" style="display:none;">삭제</button>
+      </div>
+    </div>
+    <div id="titleDefault">
+      <h1 style="cursor:pointer;" onclick="showCompanyEdit()" title="클릭하여 회사명 설정">🍱 월말 점심값 계산기</h1>
+    </div>
+  </div>
 
-<hr>
+  <span class="section-label">💰 점심값 설정</span>
+  <div class="input-group inline">
+    <input type="number" id="price" onfocus="this.select()" onkeydown="handlePriceEnter(event)" inputmode="numeric" pattern="[0-9]*" />
+    <button class="btn-primary" onclick="savePrice()" tabindex="-1">저장</button>
+  </div>
 
-이름:
-<input type="text" id="nameInput" placeholder="" onkeydown="handleEnter(event)">
-<button onclick="addPerson()" tabindex="-1">추가</button>
-<button onclick="resetAll()" tabindex="-1">초기화</button>
-<button onclick="copyResult()" tabindex="-1">복사</button>
+  <div class="divider"></div>
 
-<table>
-  <thead>
-    <tr>
-      <th>이름</th>
-      <th>먹은 횟수</th>
-      <th>월 점심값</th>
-      <th>삭제</th>
-    </tr>
-  </thead>
-  <tbody id="list"></tbody>
-</table>
+  <span class="section-label">💸 입금 계좌</span>
+
+  <div class="account-display" id="accountDisplay" style="display:none;">
+    <span class="account-text" id="accountDisplayText"></span>
+    <button class="btn-edit-inline" onclick="editAccount()">수정</button>
+  </div>
+
+  <div class="account-section" id="accountEditSection">
+    <div class="account-inline">
+      <select id="bankSelect">
+        <option value="">은행</option>
+        <option value="기업">기업</option>
+        <option value="국민">국민</option>
+        <option value="신한">신한</option>
+        <option value="우리">우리</option>
+        <option value="하나">하나</option>
+        <option value="농협">농협</option>
+        <option value="SC제일">SC제일</option>
+        <option value="씨티">씨티</option>
+        <option value="카카오뱅크">카카오뱅크</option>
+        <option value="토스뱅크">토스뱅크</option>
+        <option value="케이뱅크">케이뱅크</option>
+        <option value="우체국">우체국</option>
+        <option value="새마을금고">새마을금고</option>
+        <option value="신협">신협</option>
+        <option value="수협">수협</option>
+        <option value="대구">대구</option>
+        <option value="부산">부산</option>
+        <option value="광주">광주</option>
+        <option value="경남">경남</option>
+        <option value="전북">전북</option>
+        <option value="제주">제주</option>
+      </select>
+      <input type="text" id="accountNumber" placeholder="계좌번호" inputmode="numeric">
+      <input type="text" id="accountHolder" placeholder="예금주">
+      <button class="btn-edit-account btn-save-account" onclick="saveAccount()">저장</button>
+      <button class="btn-edit-account btn-cancel-account" id="btnCancelAccount" onclick="cancelEditAccount()" style="display:none;">취소</button>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <span class="section-label">👤 인원 설정</span>
+  <div class="input-group inline">
+    <input type="text" id="nameInput" placeholder="이름 입력" onkeydown="handleEnter(event)">
+    <button class="btn-add" onclick="addPerson()" tabindex="-1">➕ 추가</button>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn-reset" onclick="resetAll()" tabindex="-1">🗑️ 초기화</button>
+    <button class="btn-copy" onclick="copyResult()" tabindex="-1">📋 복사</button>
+    <button class="btn-export" onclick="exportCSV()" tabindex="-1">📥 CSV</button>
+  </div>
+
+  <div class="summary-banner" id="summaryBanner" style="display:none;">
+    <div class="summary-item">
+      <span class="label">인원</span>
+      <span class="value" id="sumPeople">0</span>
+    </div>
+    <div class="summary-item">
+      <span class="label">총 식수</span>
+      <span class="value" id="sumCount">0</span>
+    </div>
+    <div class="summary-item">
+      <span class="label">총 금액</span>
+      <span class="value" id="sumTotal">0원</span>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:8%"></th>
+        <th style="width:22%">이름</th>
+        <th style="width:32%">먹은 횟수</th>
+        <th style="width:28%">월 점심값</th>
+        <th style="width:10%"></th>
+      </tr>
+    </thead>
+    <tbody id="list"></tbody>
+  </table>
+
+  <div class="empty-state" id="emptyState">
+    <div class="icon">🍽️</div>
+    <p>아직 등록된 인원이 없습니다.<br>위에서 이름을 추가해 주세요!</p>
+  </div>
 
 </div>
+
+<div class="footer">Made with ❤️ · 데이터는 브라우저에 자동 저장됩니다</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
 let people = JSON.parse(localStorage.getItem("people")) || [];
 let price = Number(localStorage.getItem("price")) || 6000;
+let dragIdx = null;
+
 document.getElementById("price").value = price;
 
-function handleEnter(e) {
-  if (e.key === "Enter") addPerson();
+// =====================
+// 회사명
+// =====================
+function initTitleView() {
+  const company = localStorage.getItem("companyName") || "";
+  if (company) {
+    showTitleDisplay(company);
+  } else {
+    document.getElementById("titleDefault").style.display = "block";
+    document.getElementById("titleDisplay").style.display = "none";
+    document.getElementById("titleEditForm").style.display = "none";
+  }
 }
+
+function showTitleDisplay(name) {
+  document.getElementById("titleDefault").style.display = "none";
+  document.getElementById("titleEditForm").style.display = "none";
+  document.getElementById("titleDisplay").style.display = "block";
+  document.getElementById("titleText").textContent = `🍱 ${name} 월말 점심값 계산기`;
+}
+
+function showCompanyEdit() {
+  const company = localStorage.getItem("companyName") || "";
+  document.getElementById("titleDefault").style.display = "none";
+  document.getElementById("titleDisplay").style.display = "none";
+  document.getElementById("titleEditForm").style.display = "block";
+  document.getElementById("companyInput").value = company;
+  document.getElementById("btnCancelTitle").style.display = "inline-flex";
+  document.getElementById("btnClearTitle").style.display = company ? "inline-flex" : "none";
+  setTimeout(() => document.getElementById("companyInput").focus(), 100);
+}
+
+function editCompanyName() { showCompanyEdit(); }
+
+function saveCompanyName() {
+  const name = document.getElementById("companyInput").value.trim();
+  if (!name) { showToast("회사명을 입력하세요", "error"); return; }
+  localStorage.setItem("companyName", name);
+  showTitleDisplay(name);
+  showToast(`"${name}" 저장 완료!`);
+}
+
+function cancelEditCompany() {
+  const company = localStorage.getItem("companyName") || "";
+  if (company) {
+    showTitleDisplay(company);
+  } else {
+    document.getElementById("titleDefault").style.display = "block";
+    document.getElementById("titleEditForm").style.display = "none";
+    document.getElementById("titleDisplay").style.display = "none";
+  }
+}
+
+function clearCompanyName() {
+  if (!confirm("회사명을 삭제할까요?")) return;
+  localStorage.removeItem("companyName");
+  document.getElementById("titleDefault").style.display = "block";
+  document.getElementById("titleEditForm").style.display = "none";
+  document.getElementById("titleDisplay").style.display = "none";
+  showToast("회사명 삭제됨", "info");
+}
+
+initTitleView();
+
+// =====================
+// 계좌
+// =====================
+function initAccountView() {
+  const a = JSON.parse(localStorage.getItem("account")) || {};
+  if (a.bank && a.number && a.holder) {
+    showAccountDisplay();
+  } else {
+    showAccountEdit(false);
+  }
+}
+
+function showAccountDisplay() {
+  const a = JSON.parse(localStorage.getItem("account")) || {};
+  document.getElementById("accountDisplay").style.display = "flex";
+  document.getElementById("accountEditSection").style.display = "none";
+  document.getElementById("accountDisplayText").textContent = `${a.bank}  ${a.number}  ${a.holder}`;
+}
+
+function showAccountEdit(showCancel) {
+  const a = JSON.parse(localStorage.getItem("account")) || {};
+  document.getElementById("accountDisplay").style.display = "none";
+  document.getElementById("accountEditSection").style.display = "block";
+  document.getElementById("btnCancelAccount").style.display = showCancel ? "inline-flex" : "none";
+  if (a.bank) document.getElementById("bankSelect").value = a.bank;
+  if (a.number) document.getElementById("accountNumber").value = a.number;
+  if (a.holder) document.getElementById("accountHolder").value = a.holder;
+}
+
+function editAccount() {
+  showAccountEdit(true);
+  document.getElementById("bankSelect").focus();
+}
+
+function saveAccount() {
+  const bank = document.getElementById("bankSelect").value;
+  const number = document.getElementById("accountNumber").value.trim();
+  const holder = document.getElementById("accountHolder").value.trim();
+  if (!bank || !number || !holder) {
+    showToast("은행, 계좌번호, 예금주를 모두 입력하세요", "error");
+    return;
+  }
+  localStorage.setItem("account", JSON.stringify({ bank, number, holder }));
+  showAccountDisplay();
+  showToast("💸 계좌 정보 저장!", "info");
+}
+
+function cancelEditAccount() { showAccountDisplay(); }
+
+function getAccountString() {
+  const a = JSON.parse(localStorage.getItem("account")) || {};
+  if (a.bank && a.number && a.holder) return `${a.bank} ${a.number} ${a.holder}`;
+  return "";
+}
+
+initAccountView();
+
+// =====================
+// Dark mode
+// =====================
+if (localStorage.getItem("dark") === "1") {
+  document.body.classList.add("dark");
+  document.querySelector(".dark-toggle").textContent = "☀️";
+}
+
+function toggleDark() {
+  const isDark = document.body.classList.toggle("dark");
+  localStorage.setItem("dark", isDark ? "1" : "0");
+  document.querySelector(".dark-toggle").textContent = isDark ? "☀️" : "🌙";
+}
+
+// =====================
+// Toast
+// =====================
+function showToast(msg, type = "success") {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "toast " + type;
+  void t.offsetWidth;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+// =====================
+// Core
+// =====================
+function handleEnter(e) { if (e.key === "Enter") addPerson(); }
 
 function handlePriceEnter(e) {
   if (e.key !== "Enter") return;
@@ -140,22 +948,37 @@ function handlePriceEnter(e) {
 }
 
 function savePrice() {
-  price = Number(document.getElementById("price").value) || 0;
+  const val = Number(document.getElementById("price").value);
+  if (val <= 0) { showToast("올바른 금액을 입력하세요", "error"); return; }
+  price = val;
   localStorage.setItem("price", price);
   updateTotalsOnly();
+  updateSummary();
+  showToast(`점심값 ${formatWon(price)}으로 저장!`);
 }
 
 function addPerson() {
-  const name = document.getElementById("nameInput").value.trim();
-  if (!name) return alert("이름 입력하세요");
+  const input = document.getElementById("nameInput");
+  const name = input.value.trim();
+  if (!name) { showToast("이름을 입력하세요", "error"); input.focus(); return; }
+  if (people.some(p => p.name === name)) { showToast("이미 등록된 이름입니다", "error"); input.select(); return; }
   people.push({ name, count: 0 });
-  document.getElementById("nameInput").value = "";
+  input.value = "";
+  input.focus();
   saveAll();
+  showToast(`${name} 추가 완료!`);
+  setTimeout(() => {
+    const rows = document.querySelectorAll("#list tr");
+    const last = rows[rows.length - 1];
+    if (last) last.classList.add("highlight");
+  }, 50);
 }
 
 function removePerson(index) {
+  const name = people[index].name;
   people.splice(index, 1);
   saveAll();
+  showToast(`${name} 삭제됨`, "info");
 }
 
 function resetAll() {
@@ -163,76 +986,112 @@ function resetAll() {
   people = [];
   localStorage.removeItem("people");
   render();
+  updateSummary();
+  showToast("초기화 완료!", "info");
 }
 
 function saveAll() {
   localStorage.setItem("people", JSON.stringify(people));
   render();
+  updateSummary();
 }
 
-function formatWon(num) {
-  return num.toLocaleString("ko-KR") + "원";
-}
+function formatWon(num) { return num.toLocaleString("ko-KR") + "원"; }
 
 function render() {
   const tbody = document.getElementById("list");
+  const empty = document.getElementById("emptyState");
   tbody.innerHTML = "";
+
+  if (people.length === 0) {
+    empty.style.display = "block";
+    document.getElementById("summaryBanner").style.display = "none";
+    return;
+  }
+
+  empty.style.display = "none";
+  document.getElementById("summaryBanner").style.display = "flex";
+
   people.forEach((p, i) => {
     const tr = document.createElement("tr");
-
+    tr.draggable = true;
+    tr.dataset.index = i;
     tr.innerHTML = `
-      <td>${p.name}</td>
+      <td><span class="drag-handle" title="드래그하여 순서 변경">⠿</span></td>
+      <td>${escapeHtml(p.name)}</td>
       <td>
-        <input 
-          type="number"
-          min="0"
-          step="1"
-          inputmode="numeric"
-          pattern="[0-9]*"
-          value="${p.count}" 
-          data-index="${i}"
-          onfocus="this.select()"
-        >
+        <div class="counter-control">
+          <button class="counter-btn counter-minus" data-idx="${i}" data-dir="-1" tabindex="-1">−</button>
+          <input type="number" min="0" step="1" inputmode="numeric" pattern="[0-9]*" value="${p.count}" data-index="${i}" onfocus="this.select()">
+          <button class="counter-btn counter-plus" data-idx="${i}" data-dir="1" tabindex="-1">+</button>
+        </div>
       </td>
-      <td class="total">${formatWon(p.count * price)}</td>
-      <td><button tabindex="-1">삭제</button></td>
+      <td class="total-cell">${formatWon(p.count * price)}</td>
+      <td><button class="btn-delete" tabindex="-1" title="삭제">✕</button></td>
     `;
-
-    tr.querySelector("button").onclick = () => removePerson(i);
+    tr.querySelector(".btn-delete").onclick = () => removePerson(i);
+    tr.addEventListener("dragstart", handleDragStart);
+    tr.addEventListener("dragover", handleDragOver);
+    tr.addEventListener("dragleave", handleDragLeave);
+    tr.addEventListener("drop", handleDrop);
+    tr.addEventListener("dragend", handleDragEnd);
     tbody.appendChild(tr);
   });
+  updateSummary();
 }
+
+function escapeHtml(str) {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+document.getElementById("list").addEventListener("click", function(e) {
+  const btn = e.target.closest(".counter-btn");
+  if (!btn) return;
+  const idx = Number(btn.dataset.idx);
+  const dir = Number(btn.dataset.dir);
+  people[idx].count = Math.max(0, people[idx].count + dir);
+  btn.parentElement.querySelector("input").value = people[idx].count;
+  localStorage.setItem("people", JSON.stringify(people));
+  updateTotalsOnly();
+  updateSummary();
+});
 
 document.getElementById("list").addEventListener("input", function(e) {
   if (e.target.tagName !== "INPUT") return;
   const idx = Number(e.target.dataset.index);
-
   let raw = e.target.value.replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '');
   const val = raw === "" ? 0 : Number(raw);
   e.target.value = val;
-
   people[idx].count = val;
   localStorage.setItem("people", JSON.stringify(people));
   updateTotalsOnly();
+  updateSummary();
 });
 
 function updateTotalsOnly() {
   document.querySelectorAll("#list tr").forEach((tr, i) => {
-    const totalCell = tr.querySelector(".total");
-    totalCell.textContent = formatWon(people[i].count * price);
+    const totalCell = tr.querySelector(".total-cell");
+    if (totalCell && people[i]) totalCell.textContent = formatWon(people[i].count * price);
   });
+}
+
+function updateSummary() {
+  if (people.length === 0) return;
+  document.getElementById("sumPeople").textContent = people.length + "명";
+  const totalCount = people.reduce((s, p) => s + p.count, 0);
+  document.getElementById("sumCount").textContent = totalCount + "회";
+  document.getElementById("sumTotal").textContent = formatWon(totalCount * price);
 }
 
 document.getElementById("list").addEventListener("keydown", function(e) {
   if (e.key !== "Tab" && e.key !== "Enter") return;
-
   const inputs = Array.from(document.querySelectorAll('#list input[type="number"]'));
   const current = document.activeElement;
   const idx = inputs.indexOf(current);
   if (idx === -1) return;
-
   e.preventDefault();
-
   if (e.shiftKey && e.key === "Tab") {
     inputs[idx === 0 ? inputs.length - 1 : idx - 1].focus();
   } else {
@@ -240,29 +1099,89 @@ document.getElementById("list").addEventListener("keydown", function(e) {
   }
 });
 
+// Drag
+function handleDragStart(e) {
+  dragIdx = Number(this.dataset.index);
+  this.classList.add("dragging");
+  e.dataTransfer.effectAllowed = "move";
+}
+function handleDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = "move";
+  this.classList.add("drag-over");
+}
+function handleDragLeave() { this.classList.remove("drag-over"); }
+function handleDrop(e) {
+  e.preventDefault();
+  this.classList.remove("drag-over");
+  const dropIdx = Number(this.dataset.index);
+  if (dragIdx === null || dragIdx === dropIdx) return;
+  const [moved] = people.splice(dragIdx, 1);
+  people.splice(dropIdx, 0, moved);
+  saveAll();
+  showToast("순서 변경됨", "info");
+}
+function handleDragEnd() {
+  this.classList.remove("dragging");
+  document.querySelectorAll(".drag-over").forEach(el => el.classList.remove("drag-over"));
+  dragIdx = null;
+}
+
+// Copy
 function copyResult() {
-  if (people.length === 0) {
-    alert("복사할 데이터가 없습니다.");
-    return;
-  }
+  if (people.length === 0) { showToast("복사할 데이터가 없습니다", "error"); return; }
 
   const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth() + 1;
-  const title = `${year}년 ${month}월 정산`;
+  const company = localStorage.getItem("companyName") || "";
+  const prefix = company ? `${company} ` : "";
+  const title = `📅 ${prefix}${now.getFullYear()}년 ${now.getMonth()+1}월 점심 정산`;
+  const divider = "─".repeat(24);
 
   const lines = people.map(p => {
     const total = p.count * price;
-    return `${p.name} ${price} * ${p.count} = ${total.toLocaleString("ko-KR")}원`;
+    return `  ${p.name}  │  ${price.toLocaleString()} × ${p.count}회  =  ${total.toLocaleString("ko-KR")}원`;
   });
 
-  const resultText = [title, ...lines].join("\n");
+  const parts = [title, divider, ...lines, divider];
+  const accountStr = getAccountString();
+  if (accountStr) parts.push(`  ${accountStr}`);
+
+  const resultText = parts.join("\n");
 
   navigator.clipboard.writeText(resultText).then(() => {
-    alert("월 정산 내역이 복사되었습니다!");
+    showToast("📋 정산 내역 복사 완료!");
   }).catch(() => {
-    alert("복사에 실패했습니다. 브라우저 권한을 확인하세요.");
+    const ta = document.createElement("textarea");
+    ta.value = resultText;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    showToast("📋 정산 내역 복사 완료!");
   });
+}
+
+// CSV
+function exportCSV() {
+  if (people.length === 0) { showToast("내보낼 데이터가 없습니다", "error"); return; }
+  const now = new Date();
+  const month = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  let csv = "\uFEFF이름,횟수,단가,합계\n";
+  people.forEach(p => { csv += `${p.name},${p.count},${price},${p.count * price}\n`; });
+
+  const a = JSON.parse(localStorage.getItem("account")) || {};
+  if (a.bank && a.number && a.holder) {
+    csv += `\n입금계좌,${a.bank} ${a.number} ${a.holder},,\n`;
+  }
+
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `점심정산_${month}.csv`;
+  link.click();
+  URL.revokeObjectURL(url);
+  showToast("📥 CSV 파일 다운로드!", "success");
 }
 
 render();
